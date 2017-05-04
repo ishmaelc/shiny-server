@@ -36,24 +36,6 @@ if (file.exists(filename)) {
 }
 
 ui <- fluidPage(
-  # Ignore this tags$head section, just adding metadata for facebook/twitter sharing
-  tags$head(
-    tags$link(rel = "shortcut icon", type="image/x-icon", href="http://daattali.com/shiny/img/favicon.ico"),
-    # Facebook OpenGraph tags
-    tags$meta(property = "og:title", content = share$title),
-    tags$meta(property = "og:type", content = "website"),
-    tags$meta(property = "og:url", content = share$url),
-    tags$meta(property = "og:image", content = share$image),
-    tags$meta(property = "og:description", content = share$description),
-    
-    # Twitter summary cards
-    tags$meta(name = "twitter:card", content = "summary"),
-    tags$meta(name = "twitter:site", content = paste0("@", share$twitter_user)),
-    tags$meta(name = "twitter:creator", content = paste0("@", share$twitter_user)),
-    tags$meta(name = "twitter:title", content = share$title),
-    tags$meta(name = "twitter:description", content = share$description),
-    tags$meta(name = "twitter:image", content = share$image)
-  ),
   titlePanel("BC Liquor Store prices"),
   sidebarLayout(
     sidebarPanel(
@@ -88,7 +70,7 @@ ui <- fluidPage(
       plotOutput("plot"),
       br(), br(),
       #tableOutput("prices")
-      DT::dataTableOutput("prices")
+      dataTableOutput("prices")
     )
   )
 )
@@ -145,7 +127,7 @@ server <- function(input, output, session) {
       theme_classic(20)
   })
   
-  output$prices <- DT::renderDataTable({
+  output$prices <- renderDataTable({
     prices()
   })
   
